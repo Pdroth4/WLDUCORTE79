@@ -1,18 +1,19 @@
-import { useEffect, useMemo, useState } from "react";
-import { ChevronLeft, ChevronRight, Image as ImageIcon } from "lucide-react";
+import { useEffect, useMemo, useState, useRef } from "react";
+import { Image as ImageIcon } from "lucide-react";
 import { motion } from "framer-motion";
 import { galleryImages } from "../data/siteData.js";
 
 export default function Carousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState(0);
   const total = galleryImages.length;
+  const carouselRef = useRef(null);
 
   const currentImage = useMemo(
     () => galleryImages[currentIndex],
     [currentIndex]
   );
-
-
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -28,6 +29,27 @@ export default function Carousel() {
 
   function goToNext() {
     setCurrentIndex((index) => (index + 1) % total);
+  }
+
+  function handleDragStart(e) {
+    setIsDragging(true);
+    setDragStart(e.type.includes("mouse") ? e.clientX : e.touches[0].clientX);
+  }
+
+  function handleDragEnd(e) {
+    if (!isDragging) return;
+    setIsDragging(false);
+
+    const dragEnd = e.type.includes("mouse") ? e.clientX : e.changedTouches[0].clientX;
+    const dragDistance = dragStart - dragEnd;
+
+    if (Math.abs(dragDistance) > 50) {
+      if (dragDistance > 0) {
+        goToNext();
+      } else {
+        goToPrevious();
+      }
+    }
   }
 
   return (
@@ -46,7 +68,15 @@ export default function Carousel() {
           <div className="absolute inset-0 rounded-[2rem] bg-barberGradient opacity-20 blur-3xl" />
 
           <div className="glass-card relative overflow-hidden">
-            <div className="relative aspect-[4/5] min-[430px]:aspect-[16/11] md:aspect-[16/8]">
+            <div
+              ref={carouselRef}
+              className="relative aspect-[4/5] min-[430px]:aspect-[16/11] md:aspect-[16/8] cursor-grab active:cursor-grabbing select-none"
+              onMouseDown={handleDragStart}
+              onMouseUp={handleDragEnd}
+              onMouseLeave={handleDragEnd}
+              onTouchStart={handleDragStart}
+              onTouchEnd={handleDragEnd}
+            >
               {currentImage.src ? (
                 <motion.img
                   key={currentImage.src}
@@ -86,24 +116,6 @@ export default function Carousel() {
                   WLDUCORTE79
                 </p>
               </div>
-
-              <button
-                type="button"
-                aria-label="Foto anterior"
-                onClick={goToPrevious}
-                className="absolute left-3 top-1/2 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-2xl border border-white/15 bg-black/55 text-white backdrop-blur transition hover:bg-white/10 active:scale-95 sm:left-5"
-              >
-                <ChevronLeft className="h-6 w-6" />
-              </button>
-
-              <button
-                type="button"
-                aria-label="Próxima foto"
-                onClick={goToNext}
-                className="absolute right-3 top-1/2 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-2xl border border-white/15 bg-black/55 text-white backdrop-blur transition hover:bg-white/10 active:scale-95 sm:right-5"
-              >
-                <ChevronRight className="h-6 w-6" />
-              </button>
             </div>
 
             <div className="flex items-center justify-center gap-2 border-t border-white/10 bg-black/40 px-4 py-4">
