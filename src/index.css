@@ -36,18 +36,22 @@ select {
   @apply mx-auto w-full max-w-7xl;
 }
 
+/* Botão principal com fundo escuro e borda azul */
 .gradient-button {
-  @apply inline-flex min-h-12 items-center justify-center rounded-2xl bg-barberGradient px-5 py-3 text-center text-sm font-black uppercase tracking-[0.16em] text-white shadow-glowBlue transition duration-300 hover:scale-[1.02] active:scale-95;
+  @apply inline-flex min-h-12 items-center justify-center rounded-2xl border-2 border-barber-blue bg-black/70 px-5 py-3 text-center text-sm font-black uppercase tracking-[0.16em] text-white shadow-glowBlue transition duration-300 hover:scale-[1.02] hover:bg-barber-blue hover:text-white active:scale-95;
 }
 
+/* Botão secundário escuro */
 .outline-button {
-  @apply inline-flex min-h-12 items-center justify-center rounded-2xl border border-white/20 px-5 py-3 text-center text-sm font-bold uppercase tracking-[0.14em] text-white transition duration-300 hover:border-barber-blue hover:bg-white/5 active:scale-95;
+  @apply inline-flex min-h-12 items-center justify-center rounded-2xl border border-white/15 bg-black/40 px-5 py-3 text-center text-sm font-bold uppercase tracking-[0.14em] text-white transition duration-300 hover:border-white hover:bg-white hover:text-black active:scale-95;
 }
 
+/* Cards mais escuros */
 .glass-card {
-  @apply rounded-[1.7rem] border border-white/10 bg-white/[0.045] shadow-2xl backdrop-blur;
+  @apply rounded-[1.7rem] border border-white/10 bg-black/45 shadow-2xl backdrop-blur;
 }
 
+/* Faixas azul, vermelho e branco mantidas */
 .barber-stripes {
   background-image: linear-gradient(
     135deg,
