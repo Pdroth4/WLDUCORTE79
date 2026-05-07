@@ -20,7 +20,7 @@ export default function Services() {
             Serviços e preços
           </p>
 
-          <h2 className="mt-3 text-3xl font-black uppercase tracking-[-0.04em] sm:text-5xl">
+          <h2 className="mt-3 text-3xl font-black uppercase tracking-[-0.04em] text-white sm:text-5xl">
             Escolha seu próximo visual
           </h2>
         </div>
@@ -61,7 +61,13 @@ export default function Services() {
               </p>
 
               <div className="relative mt-5 h-1.5 overflow-hidden rounded-full bg-white/10">
-                <div className="h-full w-2/3 rounded-full bg-barberGradient" />
+                <div
+                  className="h-full w-2/3 rounded-full"
+                  style={{
+                    background:
+                      "linear-gradient(90deg, #8f1530 0%, #4d3f8f 45%, #0b5fb8 100%)",
+                  }}
+                />
               </div>
             </motion.article>
           ))}
